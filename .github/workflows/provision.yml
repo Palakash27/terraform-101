@@ -31,6 +31,11 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tf.plan -input=false && terraform show -no-color tf.plan > tf.plan.txt
         working-directory: infra
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
       - name: Upload Plan
         uses: actions/upload-artifact@v4
@@ -41,3 +46,8 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -input=false tf.plan
         working-directory: infra
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
