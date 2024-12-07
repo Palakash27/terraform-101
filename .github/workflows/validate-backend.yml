@@ -2,6 +2,8 @@ name: Validate terraform backend
 
 on:
   push:
+    paths:
+      - 'backend/**'
   workflow_dispatch:
 
 jobs:
