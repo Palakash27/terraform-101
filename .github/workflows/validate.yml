@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Configure Azure
-      uses: ./github/actions/configure-azure
+      uses: ././github/actions/configure-azure
       with:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -28,7 +28,7 @@ jobs:
           az account show
 
     - name: Setup Terraform
-      uses: ./github/actions/setup-terraform
+      uses: ././github/actions/setup-terraform
       with:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}

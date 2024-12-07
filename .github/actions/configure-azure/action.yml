@@ -23,11 +23,16 @@ runs:
       shell: bash
       run: |
         echo "{
-          \"clientId\": \"${{ inputs.ARM_CLIENT_ID }}\",
-          \"clientSecret\": \"${{ inputs.ARM_CLIENT_SECRET }}\",
-          \"subscriptionId\": \"${{ inputs.ARM_SUBSCRIPTION_ID }}\",
-          \"tenantId\": \"${{ inputs.ARM_TENANT_ID }}\"
+          \"clientId\": \"$ARM_CLIENT_ID\",
+          \"clientSecret\": \"$ARM_CLIENT_SECRET\",
+          \"subscriptionId\": \"$ARM_SUBSCRIPTION_ID\",
+          \"tenantId\": \"$ARM_TENANT_ID\"
         }" >> "$GITHUB_OUTPUT"
+      env:
+        ARM_CLIENT_ID: ${{ inputs.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ inputs.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ inputs.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ inputs.ARM_TENANT_ID }}
 
     - name: Azure login
       uses: azure/login@v2
