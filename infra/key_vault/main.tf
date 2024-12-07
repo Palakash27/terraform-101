@@ -47,3 +47,9 @@ resource "azurerm_key_vault" "key_vault" {
     ]
   }
 }
+
+resource "azurerm_key_valut_secret" "dummySecret" {
+  name         = "dummySecret"
+  value        = "dummyValue"
+  key_vault_id = azurerm_key_vault.key_vault.id
+}
