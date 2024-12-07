@@ -3,3 +3,4 @@ setup.sh
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
+azure_credentials.json
