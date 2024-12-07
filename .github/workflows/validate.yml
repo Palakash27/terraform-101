@@ -1,0 +1,31 @@
+name: Validate terraform
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.10.1
+
+    - name: Setup terraform secrets
+      run: |
+        export ARM_CLIENT_ID="${{ secrets.ARM_CLIENT_ID }}" \
+        export ARM_CLIENT_SECRET="${{ secrets.ARM_CLIENT_SECRET }}" \
+        export ARM_SUBSCRIPTION_ID="${{ secrets.ARM_SUBSCRIPTION_ID }}" \
+        export ARM_TENANT_ID="${{ secrets.ARM_TENANT_ID }}"
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Validate
+      run: terraform validate
