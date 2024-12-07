@@ -12,17 +12,28 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
+    - name: Configure Azure
+      uses: ./github/actions/configure-azure
       with:
-        terraform_version: 1.10.1
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-    - name: Setup terraform secrets
-      run: |
-        export ARM_CLIENT_ID="${{ secrets.ARM_CLIENT_ID }}" \
-        export ARM_CLIENT_SECRET="${{ secrets.ARM_CLIENT_SECRET }}" \
-        export ARM_SUBSCRIPTION_ID="${{ secrets.ARM_SUBSCRIPTION_ID }}" \
-        export ARM_TENANT_ID="${{ secrets.ARM_TENANT_ID }}"
+    - name: Azure CLI script
+      uses: azure/CLI@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az account show
+
+    - name: Setup Terraform
+      uses: ./github/actions/setup-terraform
+      with:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
     - name: Terraform Init
       run: terraform init

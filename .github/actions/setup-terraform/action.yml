@@ -1,0 +1,32 @@
+name: Setup Terraform
+description: Setup Terraform with Azure credentials
+
+inputs:
+  ARM_CLIENT_ID:
+    description: ARM_CLIENT_ID
+    required: true
+  ARM_CLIENT_SECRET:
+    description: ARM_CLIENT_SECRET
+    required: true
+  ARM_SUBSCRIPTION_ID:
+    description: ARM_SUBSCRIPTION_ID
+    required: true
+  ARM_TENANT_ID:
+    description: ARM_TENANT_ID
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.10.1
+
+    - name: Setup terraform secrets
+      shell: bash
+      run: |
+        export ARM_CLIENT_ID="${{ inputs.ARM_CLIENT_ID }}" \
+        export ARM_CLIENT_SECRET="${{ inputs.ARM_CLIENT_SECRET }}" \
+        export ARM_SUBSCRIPTION_ID="${{ inputs.ARM_SUBSCRIPTION_ID }}" \
+        export ARM_TENANT_ID="${{ inputs.ARM_TENANT_ID }}"

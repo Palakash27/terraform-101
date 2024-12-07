@@ -1,0 +1,35 @@
+name: Configure Azure
+description: Configure Azure credentials for Terraform
+
+inputs:
+  ARM_CLIENT_ID:
+    description: ARM_CLIENT_ID
+    required: true
+  ARM_CLIENT_SECRET:
+    description: ARM_CLIENT_SECRET
+    required: true
+  ARM_SUBSCRIPTION_ID:
+    description: ARM_SUBSCRIPTION_ID
+    required: true
+  ARM_TENANT_ID:
+    description: ARM_TENANT_ID
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Export Azure credentials
+      id: azure-credentials
+      shell: bash
+      run: |
+        echo "{
+          \"clientId\": \"${{ inputs.ARM_CLIENT_ID }}\",
+          \"clientSecret\": \"${{ inputs.ARM_CLIENT_SECRET }}\",
+          \"subscriptionId\": \"${{ inputs.ARM_SUBSCRIPTION_ID }}\",
+          \"tenantId\": \"${{ inputs.ARM_TENANT_ID }}\"
+        }" >> "$GITHUB_OUTPUT"
+
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        creds: ${{ steps.azure-credentials.outputs.stdout }}
