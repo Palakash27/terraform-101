@@ -26,7 +26,12 @@ runs:
     - name: Setup terraform secrets
       shell: bash
       run: |
-        export ARM_CLIENT_ID="${{ inputs.ARM_CLIENT_ID }}" \
-        export ARM_CLIENT_SECRET="${{ inputs.ARM_CLIENT_SECRET }}" \
-        export ARM_SUBSCRIPTION_ID="${{ inputs.ARM_SUBSCRIPTION_ID }}" \
-        export ARM_TENANT_ID="${{ inputs.ARM_TENANT_ID }}"
+        export ARM_CLIENT_ID="$ARM_CLIENT_ID" \
+        export ARM_CLIENT_SECRET="$ARM_CLIENT_SECRET" \
+        export ARM_SUBSCRIPTION_ID="$ARM_SUBSCRIPTION_ID" \
+        export ARM_TENANT_ID="$ARM_TENANT_ID"
+      env:
+        ARM_CLIENT_ID: ${{ inputs.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ inputs.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ inputs.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ inputs.AARM_TENANT_ID }}
